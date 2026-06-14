@@ -41,7 +41,7 @@
   h1{
     font-family:"Fraunces",serif;font-weight:700;
     font-size:clamp(2.7rem,8vw,4.6rem);line-height:1.02;letter-spacing:-0.5px;
-    color:var(--ink);position:relative;display:inline-block;
+    color:var(--ink);position:relative;
   }
   .squiggle{display:block;width:min(330px,72%);height:14px;margin-top:4px}
   .squiggle path{
@@ -49,7 +49,7 @@
     stroke-dasharray:1000;stroke-dashoffset:1000;animation:draw 1.2s .35s ease forwards;
   }
   @keyframes draw{to{stroke-dashoffset:0}}
-  .lede{font-size:clamp(1.08rem,2.4vw,1.35rem);max-width:640px;margin:22px 0 26px;color:var(--ink-soft)}
+  .lede{font-size:clamp(1.08rem,2.4vw,1.35rem);margin:22px 0 26px;color:var(--ink-soft)}
   .lede b{color:var(--ink);font-weight:600}
 
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px}
@@ -133,11 +133,11 @@
   .sticky p{font-size:1.05rem;line-height:1.5}
 
   /* leave-your-mark */
-  .markintro{color:var(--ink-soft);font-size:1.02rem;max-width:620px;margin:-12px 0 22px}
-  .markbox{display:grid;grid-template-columns:1fr 3fr;gap:18px;align-items:stretch}
+  .markintro{color:var(--ink-soft);font-size:1.02rem;margin:-12px 0 22px}
+  .markbox{display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:stretch}
   .controls{
     background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;
-    display:flex;flex-direction:column;gap:8px;
+    display:flex;flex-direction:column;gap:10px;
   }
   .ctl-label{font-family:"Shantell Sans",cursive;color:var(--coral);font-size:.95rem;margin-top:4px}
   .shapes{display:grid;grid-template-columns:repeat(2,42px);gap:8px}
@@ -189,9 +189,12 @@
     .item .when{font-size:.8rem}
     .erow{grid-template-columns:1fr}
     .edu{grid-template-columns:1fr}
-    .markbox{grid-template-columns:1fr}
+    .markbox{grid-template-columns:1fr;gap:16px}
     .canvas{min-height:260px}
     .scatter{display:none}
+    .controls{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 18px}
+    .shapes,.swatches{flex-wrap:wrap;display:flex}
+    .leavebtn{margin-top:0}
   }
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important}
@@ -199,6 +202,11 @@
     .squiggle path{stroke-dashoffset:0}
   }
 </style>
+<!-- Env config: Vercel (or your build step) should inject window.__ENV__ before this.
+     If not injected, the code falls back to local-only mode. -->
+<script>
+  window.__ENV__ = window.__ENV__ || {};
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
@@ -353,7 +361,7 @@
   <div class="wrap">
     <p class="kicker">say hi, the fun way</p>
     <h2>Leave your mark</h2>
-    <p class="markintro">If you visited my site, let me know &mdash; pick a shape and a colour, then leave one little symbol of your own. Watch it float. Although, I would much prefer if you reached out with a suitable opportunity instead!</p>
+    <p class="markintro">If you visited my site, let me know &mdash; pick a shape and a colour, then leave one little symbol of your own. Watch it float. Hope you liked my profile! Reach </p>
     <div class="markbox reveal">
       <div class="controls">
         <span class="ctl-label">pick a shape</span>
@@ -389,8 +397,12 @@
   /* ---------- leave-your-mark canvas ---------- */
   (function(){
     // ── Supabase credentials ─────────────────────────────────
-    const SUPABASE_URL      = 'YOUR_SUPABASE_PROJECT_URL';  // paste your project URL
-    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';    // paste your anon key
+    const config = {
+      url:      window.__ENV__?.VITE_SUPABASE_URL      || '',
+      anonKey:  window.__ENV__?.VITE_SUPABASE_ANON_KEY  || ''
+    };
+    const SUPABASE_URL      = config.url;
+    const SUPABASE_ANON_KEY = config.anonKey;
     // ─────────────────────────────────────────────────────────
 
     const SHAPES = {
@@ -459,10 +471,9 @@
       cp.appendChild(s);
     });
 
-    // Supabase client — gracefully degrades until real credentials are pasted
-    const sb = (window.supabase && SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL')
-      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-      : null;
+    // Supabase client — gracefully degrades if credentials are missing
+    const hasCreds = window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY;
+    const sb = hasCreds ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
     async function loadAllMarks(){
       if(!sb) return;
