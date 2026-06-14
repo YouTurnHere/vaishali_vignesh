@@ -200,7 +200,6 @@
   }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script>window.ENV = window.ENV || {};</script>
 </head>
 <body>
 
@@ -389,11 +388,8 @@
 
   /* ---------- leave-your-mark canvas ---------- */
   (function(){
-    // Config object — values injected at deploy time via window.ENV
-    const CONFIG = {
-      SUPABASE_URL:      (window.ENV && window.ENV.VITE_SUPABASE_URL)      || '',
-      SUPABASE_ANON_KEY: (window.ENV && window.ENV.VITE_SUPABASE_ANON_KEY) || ''
-    };
+    const SUPABASE_URL      = https://wrfanoiugfmmjgmvxffj.supabase.co;
+    const SUPABASE_ANON_KEY =sb_publishable_RavIGHObtcQPDzqVZti34w_Fqj1lC4F;
 
     const SHAPES = {
       heart: '<path d="M12 21S3 14 3 8.5A4.5 4.5 0 0112 5a4.5 4.5 0 019 3.5C21 14 12 21 12 21z"/>',
@@ -461,12 +457,9 @@
       cp.appendChild(s);
     });
 
-    // Supabase client — gracefully falls back to local-only mode if env vars missing
-    const sb = (window.supabase && CONFIG.SUPABASE_URL && CONFIG.SUPABASE_ANON_KEY)
-      ? window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY)
+    const sb = (window.supabase && SUPABASE_URL && SUPABASE_ANON_KEY)
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
       : null;
-
-    if(!sb){ console.warn('Supabase not configured — marks will be stored locally only.'); }
 
     async function loadAllMarks(){
       if(!sb) return;
