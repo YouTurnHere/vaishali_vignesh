@@ -33,7 +33,7 @@
   }
   ::selection{background:var(--sun);color:var(--ink)}
   a{color:inherit}
-  .wrap{max-width:920px;margin:0 auto;padding:0 28px}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 40px}
 
   /* ---------- hero ---------- */
   header{position:relative;padding:74px 0 8px}
@@ -72,6 +72,12 @@
   .d2{top:230px;right:11%;animation:float 7.5s ease-in-out infinite .8s}
   .d3{bottom:-6px;right:24%;animation:float 8s ease-in-out infinite .4s}
   @keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-12px) rotate(5deg)}}
+  /* scattered side doodles */
+  .scatter{position:fixed;pointer-events:none;z-index:0;opacity:.42}
+  .sc1{top:36vh;left:1.5%;animation:float 9s ease-in-out infinite 1s}
+  .sc2{top:58vh;right:2%;animation:float 11s ease-in-out infinite 2.5s}
+  .sc3{top:78vh;left:2%;animation:float 8.5s ease-in-out infinite .5s}
+  .sc4{top:50vh;right:3%;animation:float 10s ease-in-out infinite 1.8s}
 
   /* ---------- section frame ---------- */
   section{padding:46px 0}
@@ -120,7 +126,7 @@
   /* sticky note */
   .sticky{
     background:var(--sun);color:#3A2A06;border-radius:6px;padding:26px 28px;margin-top:8px;
-    position:relative;box-shadow:0 14px 30px -18px rgba(0,0,0,.5);transform:rotate(-1.2deg);max-width:600px;
+    position:relative;box-shadow:0 14px 30px -18px rgba(0,0,0,.5);transform:rotate(-1.2deg);
   }
   .sticky:before{content:"";position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(3deg);width:96px;height:22px;background:rgba(47,111,106,.35);border-radius:2px}
   .sticky .lbl{font-family:"Shantell Sans",cursive;font-weight:600;display:block;margin-bottom:4px;font-size:1.1rem}
@@ -134,7 +140,7 @@
     display:flex;flex-direction:column;gap:8px;
   }
   .ctl-label{font-family:"Shantell Sans",cursive;color:var(--coral);font-size:.95rem;margin-top:4px}
-  .shapes{display:flex;flex-wrap:wrap;gap:8px}
+  .shapes{display:grid;grid-template-columns:repeat(2,42px);gap:8px}
   .shape-btn{
     width:42px;height:42px;border:1.5px solid var(--line);background:var(--paper);border-radius:12px;
     display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .12s ease,border-color .12s ease;padding:0;
@@ -142,7 +148,7 @@
   .shape-btn:hover{transform:translateY(-2px)}
   .shape-btn.sel{border-color:var(--teal);background:#EAF3F1}
   .shape-btn svg{width:24px;height:24px;display:block}
-  .swatches{display:flex;flex-wrap:wrap;gap:8px}
+  .swatches{display:grid;grid-template-columns:repeat(3,26px);gap:8px}
   .swatch{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent;box-shadow:0 0 0 1.5px var(--line);transition:transform .12s ease}
   .swatch:hover{transform:scale(1.12)}
   .swatch.sel{border-color:var(--paper);box-shadow:0 0 0 2.5px var(--ink)}
@@ -185,6 +191,7 @@
     .edu{grid-template-columns:1fr}
     .markbox{grid-template-columns:1fr}
     .canvas{min-height:260px}
+    .scatter{display:none}
   }
   @media (prefers-reduced-motion:reduce){
     *{animation:none!important}
@@ -192,8 +199,27 @@
     .squiggle path{stroke-dashoffset:0}
   }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
+
+<!-- scattered doodles visible while scrolling -->
+<div aria-hidden="true">
+  <svg class="scatter sc1" width="40" height="40" viewBox="0 0 46 46" fill="none" stroke="#2F6F6A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M23 40S6 29 6 17a9 9 0 0117-4 9 9 0 0117 4c0 12-17 23-17 23z" fill="#E8765A" fill-opacity=".15"/>
+  </svg>
+  <svg class="scatter sc2" width="46" height="46" viewBox="0 0 58 58" fill="none" stroke="#2F6F6A" stroke-width="3" stroke-linecap="round">
+    <path d="M29 6v9M29 43v9M6 29h9M43 29h9M13 13l6 6M45 45l-6-6M45 13l-6 6M13 45l6-6"/>
+    <circle cx="29" cy="29" r="9" stroke="#E8765A"/>
+  </svg>
+  <svg class="scatter sc3" width="36" height="36" viewBox="0 0 50 50" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M25 4l5 13 14 1-10.5 9 3.5 14L25 47l-12 1L17 36 6 27l14-1z" stroke="#F0B43C"/>
+    <path d="M25 16v9l6 4" stroke="#E8765A"/>
+  </svg>
+  <svg class="scatter sc4" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#F0B43C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 2c1 5 4 8 9 9-5 1-8 4-9 9-1-5-4-8-9-9 5-1 8-4 9-9z"/>
+  </svg>
+</div>
 
 <header>
   <svg class="doodle d1" width="58" height="58" viewBox="0 0 58 58" fill="none" stroke="#2F6F6A" stroke-width="3" stroke-linecap="round" aria-hidden="true">
@@ -327,7 +353,7 @@
   <div class="wrap">
     <p class="kicker">say hi, the fun way</p>
     <h2>Leave your mark</h2>
-    <p class="markintro">If you visited my site, let me know &mdash; pick a shape and a colour, then leave one little symbol of your own. Watch it float.</p>
+    <p class="markintro">If you visited my site, let me know &mdash; pick a shape and a colour, then leave one little symbol of your own. Watch it float. Although, I would much prefer if you reached out with a suitable opportunity instead!</p>
     <div class="markbox reveal">
       <div class="controls">
         <span class="ctl-label">pick a shape</span>
@@ -350,7 +376,7 @@
       <a href="https://www.linkedin.com/in/vaishali-vignesh/" target="_blank" rel="noopener">LinkedIn</a>
       <a href="tel:+19795536855">(979) 553-6855</a>
     </div>
-    <p class="fnote">Made by hand, with a little AI. &middot; 2026</p>
+    <p class="fnote">Made by hand, with a little AI.</p>
   </div>
 </footer>
 
@@ -362,6 +388,11 @@
 
   /* ---------- leave-your-mark canvas ---------- */
   (function(){
+    // ── Supabase credentials ─────────────────────────────────
+    const SUPABASE_URL      = 'YOUR_SUPABASE_PROJECT_URL';  // paste your project URL
+    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';    // paste your anon key
+    // ─────────────────────────────────────────────────────────
+
     const SHAPES = {
       heart: '<path d="M12 21S3 14 3 8.5A4.5 4.5 0 0112 5a4.5 4.5 0 019 3.5C21 14 12 21 12 21z"/>',
       star:  '<path d="M12 2l2.9 6.3 6.9.6-5.2 4.5 1.6 6.7L12 17l-6.2 3.6 1.6-6.7L2.2 9l6.9-.6z"/>',
@@ -371,64 +402,100 @@
     const COLORS = ['#E8765A','#2F6F6A','#F0B43C','#8E7CC3','#6FA678','#23332F'];
     let curShape = 'heart', curColor = '#E8765A';
 
-    const svg = (type,color)=>`<svg viewBox="0 0 24 24" width="30" height="30" fill="${color}" stroke="${color}">${SHAPES[type]}</svg>`;
-
-    // build shape buttons
-    const sp = document.getElementById('shapePicker');
-    Object.keys(SHAPES).forEach((type,i)=>{
-      const b=document.createElement('button');
-      b.type='button'; b.className='shape-btn'+(i===0?' sel':''); b.dataset.shape=type;
-      b.innerHTML=`<svg viewBox="0 0 24 24" fill="#54635E" stroke="#54635E">${SHAPES[type]}</svg>`;
-      b.onclick=()=>{ curShape=type; sp.querySelectorAll('.shape-btn').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); };
-      sp.appendChild(b);
-    });
-    // build swatches
-    const cp = document.getElementById('colorPicker');
-    COLORS.forEach((c,i)=>{
-      const s=document.createElement('button');
-      s.type='button'; s.className='swatch'+(i===0?' sel':''); s.style.background=c; s.dataset.color=c; s.setAttribute('aria-label','colour '+c);
-      s.onclick=()=>{ curColor=c; cp.querySelectorAll('.swatch').forEach(x=>x.classList.remove('sel')); s.classList.add('sel'); };
-      cp.appendChild(s);
-    });
-
     const canvas = document.getElementById('canvas');
-    const hint = document.getElementById('canvasHint');
-    const btn = document.getElementById('leaveBtn');
+    const hint   = document.getElementById('canvasHint');
+    const btn    = document.getElementById('leaveBtn');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const rnd=(a,b)=>a+Math.random()*(b-a);
-    const KEY='vv_mark_v3'; // bumped key clears any earlier saved shapes
+    const rnd    = (a,b) => a + Math.random() * (b - a);
+    const KEY    = 'vv_mark_v3';
 
-    function place(type,color,pop){
-      if(hint) hint.style.display='none';
-      const wrap=document.createElement('div');
-      wrap.className='floatshape'+(pop&&!reduce?' pop':'');
-      const size=rnd(30,46);
-      wrap.style.left=rnd(8,84)+'%';
-      wrap.style.top=rnd(10,72)+'%';
-      wrap.style.opacity=rnd(.6,.9).toFixed(2);
+    function getBrowserId(){
+      let id = localStorage.getItem('vv_browser_id');
+      if(!id){
+        id = Array.from(crypto.getRandomValues(new Uint8Array(16))).map(b=>b.toString(16).padStart(2,'0')).join('');
+        localStorage.setItem('vv_browser_id', id);
+      }
+      return id;
+    }
+
+    function place(type, color, pop, leftVal, topVal){
+      if(!SHAPES[type]) return;
+      if(hint) hint.style.display = 'none';
+      const wrap = document.createElement('div');
+      wrap.className = 'floatshape' + (pop && !reduce ? ' pop' : '');
+      const size = rnd(30,46);
+      wrap.style.left    = (leftVal !== undefined ? leftVal : rnd(8,84).toFixed(1))  + '%';
+      wrap.style.top     = (topVal  !== undefined ? topVal  : rnd(10,72).toFixed(1)) + '%';
+      wrap.style.opacity = rnd(.6,.9).toFixed(2);
       if(!reduce){
-        wrap.style.animationDuration=rnd(10,18).toFixed(1)+'s';
-        wrap.style.animationDelay=(-rnd(0,8)).toFixed(1)+'s';
-      } else { wrap.style.animation='none'; }
-      wrap.innerHTML=`<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}" stroke="${color}">${SHAPES[type]}</svg>`;
+        wrap.style.animationDuration = rnd(10,18).toFixed(1) + 's';
+        wrap.style.animationDelay   = (-rnd(0,8)).toFixed(1) + 's';
+      } else { wrap.style.animation = 'none'; }
+      wrap.innerHTML = `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}" stroke="${color}">${SHAPES[type]}</svg>`;
       canvas.appendChild(wrap);
     }
 
     function lock(){
-      btn.disabled=true;
-      btn.textContent='Thanks for your mark \u2713';
+      btn.disabled = true;
+      btn.textContent = 'Thanks for your mark \u2713';
     }
 
-    // one symbol per visitor: if they've already left one, show it and lock
-    let mine=null;
-    try{ mine=JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){ mine=null; }
-    if(mine && mine.type && SHAPES[mine.type]){ place(mine.type, mine.color, false); lock(); }
+    // build shape buttons
+    const sp = document.getElementById('shapePicker');
+    Object.keys(SHAPES).forEach((type,i)=>{
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'shape-btn' + (i===0 ? ' sel' : ''); b.dataset.shape = type;
+      b.innerHTML = `<svg viewBox="0 0 24 24" fill="#54635E" stroke="#54635E">${SHAPES[type]}</svg>`;
+      b.onclick = () => { curShape = type; sp.querySelectorAll('.shape-btn').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); };
+      sp.appendChild(b);
+    });
 
-    btn.onclick=()=>{
+    // build colour swatches
+    const cp = document.getElementById('colorPicker');
+    COLORS.forEach((c,i)=>{
+      const s = document.createElement('button');
+      s.type = 'button'; s.className = 'swatch' + (i===0 ? ' sel' : ''); s.style.background = c; s.dataset.color = c; s.setAttribute('aria-label','colour '+c);
+      s.onclick = () => { curColor = c; cp.querySelectorAll('.swatch').forEach(x=>x.classList.remove('sel')); s.classList.add('sel'); };
+      cp.appendChild(s);
+    });
+
+    // Supabase client — gracefully degrades until real credentials are pasted
+    const sb = (window.supabase && SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL')
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : null;
+
+    async function loadAllMarks(){
+      if(!sb) return;
+      try{
+        const { data } = await sb.from('marks').select('shape, color, "left", top');
+        if(data) data.forEach(m => place(m.shape, m.color, false, m.left, m.top));
+      } catch(e){ console.warn('Could not load marks:', e); }
+    }
+
+    // one mark per visitor
+    let mine = null;
+    try{ mine = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch(e){ mine = null; }
+    if(mine && mine.type && SHAPES[mine.type]) lock();
+
+    if(sb){ loadAllMarks(); }
+    else if(mine && mine.type && SHAPES[mine.type]){ place(mine.type, mine.color, false); }
+
+    btn.onclick = async () => {
       if(btn.disabled) return;
-      place(curShape,curColor,true);
-      try{ localStorage.setItem(KEY, JSON.stringify({type:curShape,color:curColor})); }catch(e){}
+      const leftVal = rnd(8,84).toFixed(1);
+      const topVal  = rnd(10,72).toFixed(1);
+      place(curShape, curColor, true, leftVal, topVal);
+      try{ localStorage.setItem(KEY, JSON.stringify({type:curShape, color:curColor})); } catch(e){}
       lock();
+      if(sb){
+        try{
+          await sb.from('marks').insert({
+            shape: curShape, color: curColor,
+            left: parseFloat(leftVal), top: parseFloat(topVal),
+            browser_id: getBrowserId()
+          });
+        } catch(e){ console.warn('Could not save mark:', e); }
+      }
     };
   })();
 </script>
