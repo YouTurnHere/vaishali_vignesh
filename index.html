@@ -178,27 +178,31 @@
     background:rgba(31,51,47,.55);backdrop-filter:blur(3px);
     padding:5vh 20px;overflow-y:auto;
   }
-  .modal-overlay.open{display:flex;align-items:flex-start;justify-content:center;animation:fadeIn .25s ease}
+  .modal-overlay.open{display:flex;align-items:center;justify-content:center;animation:fadeIn .25s ease}
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
   .modal{
     background:var(--paper);border:1px solid var(--line);border-radius:20px;
-    max-width:760px;width:100%;padding:0;position:relative;
+    max-width:760px;width:100%;position:relative;
+    max-height:90vh;display:flex;flex-direction:column;overflow:hidden;
     box-shadow:0 30px 70px -28px rgba(31,78,74,.7);animation:popUp .3s ease;
   }
   @keyframes popUp{from{transform:translateY(18px) scale(.98);opacity:0}to{transform:none;opacity:1}}
   .modal-head{
-    position:sticky;top:0;background:var(--teal);color:#fff;
-    border-radius:20px 20px 0 0;padding:26px 30px 22px;
+    flex-shrink:0;background:var(--teal);color:#fff;position:relative;z-index:2;
+    border-radius:20px 20px 0 0;padding:26px 64px 22px 30px;
   }
   .modal-head .mtag{font-family:"Shantell Sans",cursive;font-size:.82rem;font-weight:600;background:rgba(255,255,255,.18);padding:3px 11px;border-radius:999px;display:inline-block;margin-bottom:8px}
   .modal-head h3{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(1.4rem,3.5vw,1.9rem);line-height:1.1}
   .modal-close{
-    position:absolute;top:18px;right:18px;width:38px;height:38px;border:none;cursor:pointer;
+    position:absolute;top:18px;right:18px;width:38px;height:38px;border:none;cursor:pointer;z-index:3;
     background:rgba(255,255,255,.18);color:#fff;border-radius:50%;font-size:1.3rem;line-height:1;
     display:flex;align-items:center;justify-content:center;transition:background .15s ease;
   }
   .modal-close:hover{background:rgba(255,255,255,.34)}
-  .modal-body{padding:28px 30px 34px}
+  .modal-body{padding:28px 30px 34px;overflow-y:auto;flex:1}
+  .modal.pdf{max-width:1000px;height:90vh}
+  .modal.pdf .modal-body{padding:0;display:flex}
+  .modal.pdf iframe{width:100%;height:100%;border:none;display:block}
   .modal-body h4{font-family:"Fraunces",serif;font-weight:600;font-size:1.18rem;color:var(--ink);margin:24px 0 12px}
   .modal-body h4:first-child{margin-top:0}
   .modal-body ul{list-style:none;display:flex;flex-direction:column;gap:11px;margin:0}
@@ -301,15 +305,6 @@
     <div class="builds">
       <article class="build reveal">
         <div class="bhead">
-          <h3>AI-Powered Job Search Workflow</h3>
-          <span class="tag live">built</span>
-        </div>
-        <p>An n8n automation that scrapes, scores, and applies to jobs daily &mdash; built to cut manual effort and surface the right roles faster.</p>
-        <a class="playlink" href="#" id="jobFlowLink" role="button">View project &rarr;</a>
-      </article>
-
-      <article class="build reveal">
-        <div class="bhead">
           <h3>IncentHub</h3>
           <span class="tag prog">in progress</span>
         </div>
@@ -324,6 +319,15 @@
         </div>
         <p>Designed, built, and launched end-to-end on the Google Play Store.</p>
         <a class="playlink" href="https://play.google.com/store/apps/details?id=com.otherside.mind&hl=en_IN" target="_blank" rel="noopener">View on Google Play Store &rarr;</a>
+      </article>
+
+      <article class="build reveal">
+        <div class="bhead">
+          <h3>AI-Powered Job Search Workflow</h3>
+          <span class="tag live">built</span>
+        </div>
+        <p>An n8n automation that scrapes, scores, and applies to jobs daily &mdash; built to cut manual effort and surface the right roles faster.</p>
+        <a class="playlink" href="#" id="jobFlowLink" role="button">View project &rarr;</a>
       </article>
     </div>
   </div>
@@ -378,6 +382,14 @@
         <span class="when">Jun &rarr; Jul 2022</span>
         <span class="org">Aranyaarth Foundation</span>
         <p class="desc">Built acquisition initiatives for an NGO's sustainability courses &mdash; <span class="m">cut bounce rate 30%</span> and grew social impressions <span class="m">20%</span>.</p>
+      </div>
+      <div class="item reveal">
+        <span class="role">GoFundMe 'Giving Funds' &mdash; A Top-of-Funnel GTM POV</span>
+        <span class="when">2025</span>
+        <span class="org">Independent POV</span>
+        <p class="desc">A self-initiated analysis of GoFundMe's new donor-advised fund product &mdash; focusing on <span class="m">top-of-funnel positioning</span>, customer segmentation, and awareness and acquisition strategy.
+          <a class="playlink" href="#" id="givingFundsLink" role="button" style="display:inline-block;margin-top:9px">View project &rarr;</a>
+        </p>
       </div>
     </div>
   </div>
@@ -466,6 +478,19 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="givingFundsModal" role="dialog" aria-modal="true" aria-labelledby="givingFundsTitle">
+  <div class="modal pdf">
+    <div class="modal-head">
+      <span class="mtag">Independent POV &middot; 2025</span>
+      <button class="modal-close" id="givingFundsClose" type="button" aria-label="Close">&times;</button>
+      <h3 id="givingFundsTitle">GoFundMe 'Giving Funds' &mdash; GTM POV</h3>
+    </div>
+    <div class="modal-body">
+      <iframe src="Assets/GivingFunds_GTMPOV.pdf" title="GoFundMe Giving Funds GTM POV"></iframe>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="wrap">
     <div class="flinks">
@@ -483,18 +508,23 @@
   },{threshold:0.12});
   document.querySelectorAll('.reveal').forEach((el,i)=>{ el.style.transitionDelay=(i%3*60)+'ms'; io.observe(el); });
 
-  /* ---------- project modal ---------- */
+  /* ---------- project modals ---------- */
   (function(){
-    const modal = document.getElementById('jobFlowModal');
-    const link  = document.getElementById('jobFlowLink');
-    const close = document.getElementById('jobFlowClose');
-    if(!modal || !link) return;
-    const open = (e)=>{ if(e) e.preventDefault(); modal.classList.add('open'); document.body.style.overflow='hidden'; };
-    const shut = ()=>{ modal.classList.remove('open'); document.body.style.overflow=''; };
-    link.addEventListener('click', open);
-    close.addEventListener('click', shut);
-    modal.addEventListener('click', (e)=>{ if(e.target===modal) shut(); });
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.classList.contains('open')) shut(); });
+    const pairs = [
+      ['jobFlowLink', 'jobFlowModal', 'jobFlowClose'],
+      ['givingFundsLink', 'givingFundsModal', 'givingFundsClose']
+    ];
+    const shut = (modal)=>{ modal.classList.remove('open'); document.body.style.overflow=''; };
+    pairs.forEach(([linkId, modalId, closeId])=>{
+      const link  = document.getElementById(linkId);
+      const modal = document.getElementById(modalId);
+      const close = document.getElementById(closeId);
+      if(!link || !modal || !close) return;
+      link.addEventListener('click', (e)=>{ e.preventDefault(); modal.classList.add('open'); document.body.style.overflow='hidden'; });
+      close.addEventListener('click', ()=> shut(modal));
+      modal.addEventListener('click', (e)=>{ if(e.target===modal) shut(modal); });
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.classList.contains('open')) shut(modal); });
+    });
   })();
 
   /* ---------- leave-your-mark canvas ---------- */
