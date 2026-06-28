@@ -172,6 +172,42 @@
   .canvas .pop{animation:pop .4s ease, drift linear infinite .4s}
   @keyframes pop{0%{transform:scale(0)}60%{transform:scale(1.3)}100%{transform:scale(1)}}
 
+  /* ---------- project modal ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;z-index:100;display:none;
+    background:rgba(31,51,47,.55);backdrop-filter:blur(3px);
+    padding:5vh 20px;overflow-y:auto;
+  }
+  .modal-overlay.open{display:flex;align-items:flex-start;justify-content:center;animation:fadeIn .25s ease}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .modal{
+    background:var(--paper);border:1px solid var(--line);border-radius:20px;
+    max-width:760px;width:100%;padding:0;position:relative;
+    box-shadow:0 30px 70px -28px rgba(31,78,74,.7);animation:popUp .3s ease;
+  }
+  @keyframes popUp{from{transform:translateY(18px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+  .modal-head{
+    position:sticky;top:0;background:var(--teal);color:#fff;
+    border-radius:20px 20px 0 0;padding:26px 30px 22px;
+  }
+  .modal-head .mtag{font-family:"Shantell Sans",cursive;font-size:.82rem;font-weight:600;background:rgba(255,255,255,.18);padding:3px 11px;border-radius:999px;display:inline-block;margin-bottom:8px}
+  .modal-head h3{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(1.4rem,3.5vw,1.9rem);line-height:1.1}
+  .modal-close{
+    position:absolute;top:18px;right:18px;width:38px;height:38px;border:none;cursor:pointer;
+    background:rgba(255,255,255,.18);color:#fff;border-radius:50%;font-size:1.3rem;line-height:1;
+    display:flex;align-items:center;justify-content:center;transition:background .15s ease;
+  }
+  .modal-close:hover{background:rgba(255,255,255,.34)}
+  .modal-body{padding:28px 30px 34px}
+  .modal-body h4{font-family:"Fraunces",serif;font-weight:600;font-size:1.18rem;color:var(--ink);margin:24px 0 12px}
+  .modal-body h4:first-child{margin-top:0}
+  .modal-body ul{list-style:none;display:flex;flex-direction:column;gap:11px;margin:0}
+  .modal-body li{position:relative;padding-left:24px;color:var(--ink-soft);font-size:1rem;line-height:1.55}
+  .modal-body li:before{content:"";position:absolute;left:4px;top:9px;width:8px;height:8px;border-radius:50%;background:var(--coral)}
+  .modal-body li b,.modal-body li .m{color:var(--ink);font-weight:600}
+  .tools-box{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--sun);border-radius:14px;padding:16px 18px;color:var(--ink-soft);font-size:.97rem;line-height:1.6}
+  .modal-img{width:100%;border-radius:14px;border:1px solid var(--line);margin:6px 0 4px;display:block}
+
   /* footer */
   footer{padding:44px 0 64px;border-top:1px solid var(--line);margin-top:20px}
   .flinks{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:14px}
@@ -265,6 +301,15 @@
     <div class="builds">
       <article class="build reveal">
         <div class="bhead">
+          <h3>AI-Powered Job Search Workflow</h3>
+          <span class="tag live">built</span>
+        </div>
+        <p>An n8n automation that scrapes, scores, and applies to jobs daily &mdash; built to cut manual effort and surface the right roles faster.</p>
+        <a class="playlink" href="#" id="jobFlowLink" role="button">View project &rarr;</a>
+      </article>
+
+      <article class="build reveal">
+        <div class="bhead">
           <h3>IncentHub</h3>
           <span class="tag prog">in progress</span>
         </div>
@@ -275,10 +320,10 @@
       <article class="build reveal">
         <div class="bhead">
           <h3>A private dating app</h3>
-          <span class="tag live">live on Google Play</span>
+          <span class="tag live">live on Google Play Store</span>
         </div>
         <p>Designed, built, and launched end-to-end on the Google Play Store.</p>
-        <a class="playlink" href="https://play.google.com/store/apps/details?id=com.otherside.mind&hl=en_IN" target="_blank" rel="noopener">View on Google Play &rarr;</a>
+        <a class="playlink" href="https://play.google.com/store/apps/details?id=com.otherside.mind&hl=en_IN" target="_blank" rel="noopener">View on Google Play Store &rarr;</a>
       </article>
     </div>
   </div>
@@ -324,7 +369,7 @@
     <div class="work">
       <div class="item reveal">
         <span class="role">AI for a Special-Needs School</span>
-        <span class="when">2025</span>
+        <span class="when">March 2025</span>
         <span class="org">Community Project</span>
         <p class="desc">Automated student progress tracking using <span class="m">Power Query and Claude</span>, then taught mothers of the kids to use AI tools in a hands-on workshop.</p>
       </div>
@@ -363,7 +408,7 @@
   <div class="wrap">
     <div class="sticky reveal">
       <span class="lbl">currently &mdash;</span>
-      <p>An early-career product person who wants to build things that create real impact for the people who need it most. I have a deep love for building, for learning, and for passing on what I pick up along the way.</p>
+      <p>An early-career product marketing person who wants to build things that create real impact for the people who need it most. I have a deep love for building, for learning, and for passing on what I pick up along the way.</p>
     </div>
   </div>
 </section>
@@ -388,6 +433,39 @@
   </div>
 </section>
 
+<div class="modal-overlay" id="jobFlowModal" role="dialog" aria-modal="true" aria-labelledby="jobFlowTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="mtag">built</span>
+      <button class="modal-close" id="jobFlowClose" type="button" aria-label="Close">&times;</button>
+      <h3 id="jobFlowTitle">AI-Powered Job Search Workflow</h3>
+    </div>
+    <div class="modal-body">
+      <h4>Summary</h4>
+      <ul>
+        <li>Built an end-to-end <span class="m">n8n workflow</span> that scrapes job listings daily from LinkedIn and Indeed using Apify actors, with configurable inputs so others can adapt it easily</li>
+        <li>Implemented AI-based job matching using <span class="m">Gemini 2.5 Flash</span>, assigning each role a relevance score out of 10 based on predefined criteria to prioritize higher-fit opportunities</li>
+        <li>Optimized API usage to handle Gemini's rate limits by batching jobs into a single JSON payload per cycle &mdash; <span class="m">reducing API calls by ~80%</span></li>
+        <li>Added recruiter detail extraction to surface contact information for direct outreach</li>
+        <li>Integrated Comet browser automation to pre-fill repetitive application fields, <span class="m">reducing manual effort by up to 50%</span></li>
+        <li>Shared the workflow with friends who adapted it for their own job searches</li>
+      </ul>
+
+      <h4>Tools Used <span style="font-weight:400;color:var(--ink-soft);font-size:.95rem">($0/month)</span></h4>
+      <div class="tools-box">Apify (free) &middot; n8n (self-hosted) &middot; Gemini API &middot; Google Drive &amp; Sheets &middot; Perplexity Comet (free)</div>
+
+      <h4>Workflow</h4>
+      <img class="modal-img" src="Assets/image.png" alt="AI-Powered Job Search Workflow diagram" loading="lazy" />
+
+      <h4>Learnings</h4>
+      <ul>
+        <li>LinkedIn job postings are most effective within 24 hours of posting &mdash; many scrapes return stale listings that are already closed</li>
+        <li>Better to scrape directly from company websites rather than LinkedIn for more accurate and complete data</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="wrap">
     <div class="flinks">
@@ -404,6 +482,20 @@
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
   },{threshold:0.12});
   document.querySelectorAll('.reveal').forEach((el,i)=>{ el.style.transitionDelay=(i%3*60)+'ms'; io.observe(el); });
+
+  /* ---------- project modal ---------- */
+  (function(){
+    const modal = document.getElementById('jobFlowModal');
+    const link  = document.getElementById('jobFlowLink');
+    const close = document.getElementById('jobFlowClose');
+    if(!modal || !link) return;
+    const open = (e)=>{ if(e) e.preventDefault(); modal.classList.add('open'); document.body.style.overflow='hidden'; };
+    const shut = ()=>{ modal.classList.remove('open'); document.body.style.overflow=''; };
+    link.addEventListener('click', open);
+    close.addEventListener('click', shut);
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) shut(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.classList.contains('open')) shut(); });
+  })();
 
   /* ---------- leave-your-mark canvas ---------- */
   (function(){
